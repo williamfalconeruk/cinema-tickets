@@ -14,7 +14,7 @@
     "@babel/preset-env": "^7.22.20",
     "jest": "^28.1.1",
     "mocha": "10.0.0",
-    "prettier": "3.0.3",
+    "prettier": "^3.0.3",
     "prettier-eslint": "^15.0.1"
   }
 }
