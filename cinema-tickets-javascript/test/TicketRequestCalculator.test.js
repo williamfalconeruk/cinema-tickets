@@ -25,6 +25,7 @@ describe("TicketRequestValidator  Adult Boundary Checks", () => {
     var response = calculator.validate(request);
     expect(response).toHaveProperty("messages");
     expect(response).toHaveProperty("cost");
+    expect(response).toHaveProperty("totalTickets");
   });
 
   it("is not a negative total of tickets", () => {

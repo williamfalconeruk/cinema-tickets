@@ -7,8 +7,11 @@ export default class TicketRequestValidator {
     if (requests == null) throw new Error();
     // we cant be sure how many adult, child and infant requests there are in the incoming
     // so we need to potentially aggregate those requests.
-    let adultRequestCount = getTicketTotalFor(requests, "ADULT")
+    let adultRequestCount = this.getTicketTotalFor(requests, "ADULT");
 
+    let childRequestCount = this.getTicketTotalFor(requests, "CHILD");
+
+    let infantRequestCount = this.getTicketTotalFor(requests, "INFANT");
 
     console.log(adultRequestCount);
   
@@ -17,7 +20,7 @@ export default class TicketRequestValidator {
     let totaltickets = adultRequestCount + childRequestCount + infantRequestCount;
 
     var result = new TicketValidatorResult();
-    
+
     // get it working for the single case
     if (totaltickets < 1 || totaltickets > 20) {
       result.messages.push("please request between 1 and 20 tickets"); // possibly constant or even resource string this out.
