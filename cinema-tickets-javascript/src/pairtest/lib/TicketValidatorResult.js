@@ -1,5 +1,5 @@
 export default class TicketValidatorResult {
-  messages = [];
-  totalTickets = 0;
-  cost = 0.0;
+  errors = [];
+  totalSeats = null;
+  cost = null;
 }
