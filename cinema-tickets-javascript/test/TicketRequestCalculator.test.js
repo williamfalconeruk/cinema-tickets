@@ -32,7 +32,7 @@ describe("TicketRequestValidator  Adult Boundary Checks", () => {
     var request = [new TicketTypeRequest("ADULT", -1)];
     var response = calculator.validate(request);
     expect(response.messages).toContain(
-      "please request between 1 and 20 tickets",
+      "please request between 1 and 20 tickets in total",
     );
   });
 
@@ -40,7 +40,7 @@ describe("TicketRequestValidator  Adult Boundary Checks", () => {
     var request = [new TicketTypeRequest("ADULT", 0)];
     var response = calculator.validate(request);
     expect(response.messages).toContain(
-      "please request between 1 and 20 tickets",
+      "please request between 1 and 20 tickets in total",
     );
   });
 
@@ -48,7 +48,7 @@ describe("TicketRequestValidator  Adult Boundary Checks", () => {
     var request = [new TicketTypeRequest("ADULT", 20)];
     var response = calculator.validate(request);
     expect(response.messages).not.toContain(
-      "please request between 1 and 20 tickets",
+      "please request between 1 and 20 tickets in total",
     );
   });
 
@@ -56,7 +56,7 @@ describe("TicketRequestValidator  Adult Boundary Checks", () => {
     var request = [new TicketTypeRequest("ADULT", 1)];
     var response = calculator.validate(request);
     expect(response.messages).not.toContain(
-      "please request between 1 and 20 tickets",
+      "please request between 1 and 20 tickets in total",
     );
   });
 
@@ -64,14 +64,39 @@ describe("TicketRequestValidator  Adult Boundary Checks", () => {
     var request = [new TicketTypeRequest("ADULT", 20)];
     var response = calculator.validate(request);
     expect(response.messages).not.toContain(
-      "please request between 1 and 20 tickets",
+      "please request between 1 and 20 tickets in total",
     );
   });
 });
 
+
 describe("validate adult ticket cost", () => {});
 
-describe("validate adult and children", () => {});
+describe("validate adult and children", () => {
+
+  beforeEach(() => {
+    // reset any object state on the calculator
+    calculator = new TicketRequestValidator();
+  });
+  it("goes over the limit for Tickets when 20 adults and 1 child ticket is requested", () => {
+    var request = [new TicketTypeRequest("ADULT", 20),new TicketTypeRequest("CHILD",1)];
+    var response = calculator.validate(request);
+    expect(response.messages).toContain(
+      "please request between 1 and 20 tickets in total",
+    );
+  });
+
+  it("should not be possible to purchase more child tickets than adults", () => {
+    var request = [new TicketTypeRequest("ADULT", 1),new TicketTypeRequest("CHILD",2)];
+    var response = calculator.validate(request);
+    expect(response.messages).toContain(
+      "Child tickets can only be purchased up to the same number of adult ones.",
+    );
+  });
+
+  
+
+});
 
 describe("validate adult and infants", () => {});
 describe("validate adult, children and infants", () => {});
