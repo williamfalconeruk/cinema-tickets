@@ -1,4 +1,5 @@
 import TicketCalculationService from "../src/pairtest/service/TicketCalculationService";
+import TicketTypeRequest from "../src/pairtest/lib/TicketTypeRequest";
 import { toBeEmpty } from "jest-extended";
 expect.extend({ toBeEmpty });
 
