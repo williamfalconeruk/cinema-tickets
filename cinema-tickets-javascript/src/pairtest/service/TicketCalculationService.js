@@ -1,13 +1,13 @@
 import TicketCalculationResult from "./TicketCalculationResult.js";
 
 export default class TicketCalculationService {
-  //CONSTANTS - TODO: make these a configurable either by injection of a config object or constrcuctor values
+  //CONSTANTS - TODO: make these a configurable either by injection of a config object or constructor values
   ADULT_COST = 20.0;
   CHILD_COST = 10.0;
 
   constructor() {}
 
-  requestCalulation(requests) {
+  requestCalculation(requests) {
     if (requests == null) throw new Error();
     // we cant be sure how many adult, child and infant requests there are in the incoming
     // so we need to potentially aggregate those requests.

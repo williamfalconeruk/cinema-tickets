@@ -7,24 +7,24 @@ let calculationService;
 describe("TicketRequestValidator Adult Boundary Checks", () => {
   beforeEach(() => {
     // reset any object state on the validator -though there shouldn't be any.
-   calculationService = new TicketCalculationService();
+    calculationService = new TicketCalculationService();
   });
 
   it("throws an error when a null is passed", () => {
     expect(() => {
-      calculationService.requestCalulation(null);
+      calculationService.requestCalculation(null);
     }).toThrow(); // to do - typed exceptions.
   });
 
   it("throws an error when a undefined is passed", () => {
     expect(() => {
-      calculationService.requestCalulation(undefined);
+      calculationService.requestCalculation(undefined);
     }).toThrow(); // to do - typed exceptions.
   });
 
   it("returns an object with correct fields", () => {
     var request = [new TicketTypeRequest("ADULT", 1)];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response).toHaveProperty("errors");
     expect(response).toHaveProperty("cost");
     expect(response).toHaveProperty("totalSeats");
@@ -32,7 +32,7 @@ describe("TicketRequestValidator Adult Boundary Checks", () => {
 
   it("is not a negative total of tickets", () => {
     var request = [new TicketTypeRequest("ADULT", -1)];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -43,7 +43,7 @@ describe("TicketRequestValidator Adult Boundary Checks", () => {
 
   it("is not a zero number of tickets", () => {
     var request = [new TicketTypeRequest("ADULT", 0)];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -53,7 +53,7 @@ describe("TicketRequestValidator Adult Boundary Checks", () => {
 
   it("is a max adult ticket request, 20 seats and £400", () => {
     var request = [new TicketTypeRequest("ADULT", 20)];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).not.toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -63,7 +63,7 @@ describe("TicketRequestValidator Adult Boundary Checks", () => {
 
   it("is a valid number of tickets at min, 1 seat and costs £20", () => {
     var request = [new TicketTypeRequest("ADULT", 1)];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).not.toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -75,14 +75,12 @@ describe("TicketRequestValidator Adult Boundary Checks", () => {
 describe("validate adult and children", () => {
   beforeEach(() => {
     // reset any object state on the validator
-   calculationService = new TicketCalculationService();
+    calculationService = new TicketCalculationService();
   });
 
   it("should not pe possible to purchase a child ticket on its own", () => {
-    var request = [
-      new TicketTypeRequest("CHILD", 1),
-    ];
-    var response = calculationService.requestCalulation(request);
+    var request = [new TicketTypeRequest("CHILD", 1)];
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "Child or infant tickets can only be purchased up to the same number of adult ones.",
     );
@@ -95,7 +93,7 @@ describe("validate adult and children", () => {
       new TicketTypeRequest("ADULT", 20),
       new TicketTypeRequest("CHILD", 1),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -107,7 +105,7 @@ describe("validate adult and children", () => {
       new TicketTypeRequest("ADULT", 20),
       new TicketTypeRequest("CHILD", 1),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -120,7 +118,7 @@ describe("validate adult and children", () => {
       new TicketTypeRequest("ADULT", 1),
       new TicketTypeRequest("CHILD", 2),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "Child or infant tickets can only be purchased up to the same number of adult ones.",
     );
@@ -133,7 +131,7 @@ describe("validate adult and children", () => {
       new TicketTypeRequest("ADULT", 1),
       new TicketTypeRequest("CHILD", 1),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toBeEmpty();
     expect(response.cost).toEqual(30);
     expect(response.totalSeats).toEqual(2);
@@ -143,7 +141,7 @@ describe("validate adult and children", () => {
       new TicketTypeRequest("ADULT", 10),
       new TicketTypeRequest("CHILD", 10),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toBeEmpty();
     expect(response.cost).toEqual(300.0);
     expect(response.totalSeats).toEqual(20);
@@ -153,15 +151,12 @@ describe("validate adult and children", () => {
 describe("validate adult and infants", () => {
   beforeEach(() => {
     // reset any object state on the validator
-   calculationService = new TicketCalculationService();
+    calculationService = new TicketCalculationService();
   });
 
-
   it("should not pe possible to purchase an infant ticket on its own", () => {
-    var request = [
-      new TicketTypeRequest("INFANT", 1),
-    ];
-    var response = calculationService.requestCalulation(request);
+    var request = [new TicketTypeRequest("INFANT", 1)];
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "Child or infant tickets can only be purchased up to the same number of adult ones.",
     );
@@ -174,7 +169,7 @@ describe("validate adult and infants", () => {
       new TicketTypeRequest("ADULT", 1),
       new TicketTypeRequest("INFANT", 2),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "Child or infant tickets can only be purchased up to the same number of adult ones.",
     );
@@ -187,7 +182,7 @@ describe("validate adult and infants", () => {
       new TicketTypeRequest("ADULT", 1),
       new TicketTypeRequest("INFANT", 1),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toBeEmpty();
     expect(response.cost).toEqual(20);
     expect(response.totalSeats).toEqual(1);
@@ -197,7 +192,7 @@ describe("validate adult and infants", () => {
       new TicketTypeRequest("ADULT", 10),
       new TicketTypeRequest("INFANT", 10),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toBeEmpty();
     expect(response.cost).toEqual(200.0);
     expect(response.totalSeats).toEqual(10);
@@ -206,7 +201,7 @@ describe("validate adult and infants", () => {
 describe("validate adult, children and infants", () => {
   beforeEach(() => {
     // reset any object state on the validator
-   calculationService = new TicketCalculationService();
+    calculationService = new TicketCalculationService();
   });
   it("should not be possible to purchase when 20 adults and 1 child  and  1 infant ticket is requested", () => {
     var request = [
@@ -214,7 +209,7 @@ describe("validate adult, children and infants", () => {
       new TicketTypeRequest("INFANT", 1),
       new TicketTypeRequest("CHILD", 1),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -228,7 +223,7 @@ describe("validate adult, children and infants", () => {
       new TicketTypeRequest("INFANT", 0),
       new TicketTypeRequest("CHILD", 0),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "please request between 1 and 20 tickets in total",
     );
@@ -242,7 +237,7 @@ describe("validate adult, children and infants", () => {
       new TicketTypeRequest("CHILD", 1),
       new TicketTypeRequest("INFANT", 1),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toContain(
       "Child or infant tickets can only be purchased up to the same number of adult ones.",
     );
@@ -257,7 +252,7 @@ describe("validate adult, children and infants", () => {
       new TicketTypeRequest("CHILD", 1),
       new TicketTypeRequest("INFANT", 1),
     ];
-    var response = calculationService.requestCalulation(request);
+    var response = calculationService.requestCalculation(request);
     expect(response.errors).toBeEmpty();
     expect(response.cost).toEqual(50.0);
     expect(response.totalSeats).toEqual(3);
