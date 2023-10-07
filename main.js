@@ -1,4 +1,4 @@
-import { input } from "@inquirer/prompts";
+import { input} from "@inquirer/prompts";
 import TicketCalculationService from "./src/pairtest/service/TicketCalculationService.js";
 import TicketTypeRequest from "./src/pairtest/lib/TicketTypeRequest.js";
 
@@ -24,5 +24,5 @@ let infantRequest = new TicketTypeRequest("INFANT", Number(infantTickets));
 let request = [adultRequest, childRequest, infantRequest];
 
 let result = ticketCalculationService.requestCalculation(request);
-
+console.log("The results are:");
 console.dir(result);
