@@ -1,4 +1,4 @@
-export default class TicketValidatorResult {
+export default class TicketCalculationResult {
   errors = [];
   totalSeats = null;
   cost = null;

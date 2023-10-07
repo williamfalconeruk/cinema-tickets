@@ -1,13 +1,13 @@
-import TicketValidatorResult from "./TicketValidatorResult.js";
+import TicketCalculationResult from "./TicketCalculationResult.js";
 
-export default class TicketRequestValidator {
+export default class TicketCalculationService {
   //CONSTANTS - TODO: make these a configurable either by injection of a config object or constrcuctor values
   ADULT_COST = 20.0;
   CHILD_COST = 10.0;
 
   constructor() {}
 
-  validate(requests) {
+  requestCalulation(requests) {
     if (requests == null) throw new Error();
     // we cant be sure how many adult, child and infant requests there are in the incoming
     // so we need to potentially aggregate those requests.
@@ -17,12 +17,10 @@ export default class TicketRequestValidator {
 
     let infantRequestCount = this.getTicketTotalFor(requests, "INFANT");
 
-    console.log(adultRequestCount);
-
     let totaltickets =
       adultRequestCount + childRequestCount + infantRequestCount;
 
-    var result = new TicketValidatorResult();
+    var result = new TicketCalculationResult();
 
     // you have the total tickets allowed, check we have no more than 20 to order.
     if (totaltickets < 1 || totaltickets > 20) {
