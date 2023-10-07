@@ -1,10 +1,10 @@
-# Ticket Calcultion Service
+# Ticket Calculation Service
 
 This is in response to an exercise, based on [this requirement](./requirement.md).
-in the process of doing this i've used some of the tools i've remembered, and had to relearn some along the way. 
+in the process of doing this I've used some of the tools i've remembered, and had to relearn some along the way. 
 The principles are the same (TDD, DI, mocks, clean code etc). 
 It's been really good to try out javascript again.
-i've tried to demonstrate the requirement, but there will always be something I may have missed.
+I've tried to demonstrate the requirement, but there will always be something I may have missed.
 
 - Prerequesites
   Node.JS (latest will do)
@@ -24,3 +24,5 @@ Libraries and things uses:
 - eslint
 - jest and jest extended
 - inquirer/prompt (for the demo code)
+
+hope you like the repo!
