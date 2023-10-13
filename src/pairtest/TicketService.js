@@ -38,7 +38,7 @@ export default class TicketService {
     } else {
       // tthis would be good if this was a transactional piece. unfortunately the API calls here doesn't allow it.
       this.seatReservationService.reserveSeat(accountId, result.totalSeats);
-      this.paymentService.makePayment(result.cost);
+      this.paymentService.makePayment(accountId, result.cost);
     }
   }
 }
